@@ -39,3 +39,37 @@ class Person {
         return `'Name: ${this.name}, age: ${this.age}'`
     }
 }
+
+
+type Item = {
+    title: string;
+    rating: number;
+}
+function filterByRating(items: Item[]): Item[] {
+    const highRating: any[] = items.filter(item => item.rating >= 4)
+    return highRating;
+}
+
+
+type user = {
+    id: number;
+    name: string;
+    email: string;
+    isActive: boolean;
+}
+function filterActiveUsers (users: user[]): user[]{
+    const activeUsers = users.filter(user => user.isActive === true);
+    return activeUsers;
+}
+
+
+interface Book {
+    title: string;
+    author: string;
+    publishedYear: number;
+    isAvailable: boolean;
+}
+function printBookDetails(book: Book): string{
+    const availability: string = book.isAvailable ? "Yes" : "No";
+    return `Title: ${book.title}, Author: ${book.author}, Published: ${book.publishedYear}, Available: ${availability}`;
+}
