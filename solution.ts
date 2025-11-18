@@ -57,8 +57,8 @@ type user = {
     email: string;
     isActive: boolean;
 }
-function filterActiveUsers (users: user[]): user[]{
-    const activeUsers = users.filter(user => user.isActive === true);
+function filterActiveUsers(users: user[]): user[] {
+    const activeUsers: any[] = users.filter(user => user.isActive === true);
     return activeUsers;
 }
 
@@ -69,7 +69,61 @@ interface Book {
     publishedYear: number;
     isAvailable: boolean;
 }
-function printBookDetails(book: Book): string{
+function printBookDetails(book: Book): string {
     const availability: string = book.isAvailable ? "Yes" : "No";
     return `Title: ${book.title}, Author: ${book.author}, Published: ${book.publishedYear}, Available: ${availability}`;
+}
+
+
+function getUniqueValues(arr1: (string | number)[], arr2: (string | number)[]): (string | number)[] {
+    const uniqeArray: (string | number)[] = [];
+
+    function existInUniqeArray(value: string | number): boolean {
+        for (let i = 0; i < uniqeArray.length; i++) {
+            if (value === uniqeArray[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+        if (!existInUniqeArray(arr1[i])) {
+            uniqeArray[uniqeArray.length] = arr1[i];
+        }
+    }
+
+    for (let i = 0; i < arr2.length; i++) {
+        if (!existInUniqeArray(arr2[i])) {
+            uniqeArray[uniqeArray.length] = arr2[i];
+        }
+    }
+    return uniqeArray;
+}
+
+
+type Product = {
+    name: string;
+    price: number;
+    quantity: number;
+    discount?: number;
+}
+function calculateTotalPrice(products: Product[]): number {
+    if (products.length === 0) {
+        return 0;
+    }
+    const productPrice = products.map(product => {
+        const totalWithoutDiscount = product.price * product.quantity;
+        if (product.discount) {
+            let withDiscount = (totalWithoutDiscount / 100) * product.discount;
+            withDiscount = totalWithoutDiscount - withDiscount;
+            return withDiscount;
+        } else {
+            return totalWithoutDiscount;
+        }
+    })
+    const finalPrice = productPrice.reduce((acc, vaule) => {
+        return acc + vaule;
+    })
+    return finalPrice;
 }
